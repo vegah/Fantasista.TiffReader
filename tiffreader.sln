@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fantasista.TiffReader", "Fantasista.TiffReader\Fantasista.TiffReader.csproj", "{C2B328ED-9767-43F1-BEC6-91C15954D6EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fantasista.TiffReader.Tests", "Fantasista.TiffReader.Tests\Fantasista.TiffReader.Tests.csproj", "{CECFBB03-2B29-4308-B978-0AC22A901E56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2B328ED-9767-43F1-BEC6-91C15954D6EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2B328ED-9767-43F1-BEC6-91C15954D6EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2B328ED-9767-43F1-BEC6-91C15954D6EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2B328ED-9767-43F1-BEC6-91C15954D6EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CECFBB03-2B29-4308-B978-0AC22A901E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CECFBB03-2B29-4308-B978-0AC22A901E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CECFBB03-2B29-4308-B978-0AC22A901E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CECFBB03-2B29-4308-B978-0AC22A901E56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
