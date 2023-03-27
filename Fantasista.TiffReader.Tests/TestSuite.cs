@@ -58,8 +58,9 @@ namespace Fantasista.TiffReader.Tests
             {
                 Console.WriteLine($"Width :{image.Width}, Height: ${image.Height}, Components: {image.ColorComponents} - size: {image.Width*image.Height*image.ColorComponents}");
                 Console.WriteLine($"Output buffer : {image.RawData.Length}");
-                using var outstream =  File.OpenWrite("../../../../testimages/out/odd_ifd"+(fileNo++)+".jpg");
+                using var outstream =  File.OpenWrite("../../../../testimages/out/test-"+(fileNo++)+".jpg");
                 image.WriteToRgbJpeg(outstream);
+                File.WriteAllBytes("../../../../testimages/out/test-"+(fileNo++)+".data",image.RawData);
             }
         }
 

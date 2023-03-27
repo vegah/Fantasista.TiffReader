@@ -50,12 +50,10 @@ namespace Fantasista.TiffReader
             {
                 var arr = new [] {_rawData[x+1], _rawData[x]};
                 var rgb16 = BitConverter.ToUInt16(arr);
-                var r = rgb16>>11;
-                var g = (rgb16 & 0x7e0) >> 5;
-                var b = rgb16 & 0x1f;
-                output[index++]=(byte)(r*255/31);
-                output[index++]=(byte)(g*255/63);
-                output[index++]=(byte)(b*255/31);
+                var r = rgb16>>8;
+                output[index++]=(byte)r;
+                output[index++]=(byte)r;
+                output[index++]=(byte)r;
             }
             return output;
         }
