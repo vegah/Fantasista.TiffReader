@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace Fantasista.TiffReader.Image.Decompressors
+namespace Fantasista.TiffReader.Image.Decompressors.Exceptions
 {
     [Serializable]
     internal class JpegDecompressionException : Exception

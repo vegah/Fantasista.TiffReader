@@ -12,7 +12,7 @@ public class TiffReader
         _br = new TiffBinaryReader(s);
     }
 
-    public void Read()
+    public IEnumerable<TiffImage> Read()
     {
         var header = new Header(_br);
         header.Read();
@@ -25,7 +25,7 @@ public class TiffReader
             ifd.ReadIFD();
             var image = new TiffImage(_br,ifd);
             image.Read();
-            File.WriteAllBytes("/home/vegardb/Downloads/temp/"+nextIfd+".data",image.RawData);
+            yield return image;
             nextIfd = ifd.NextOffset;
         }
     }

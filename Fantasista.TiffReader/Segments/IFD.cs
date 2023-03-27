@@ -38,6 +38,8 @@ namespace Fantasista.TiffReader.Segments
             Console.WriteLine($"{field} at pos {_reader.Position}");
         }
 
-        public Field this[Tag index] => _fields[index];
+        public Boolean Contains(Tag tag) => _fields.ContainsKey(tag);
+
+        public Field this[Tag tag] => _fields[tag];
     }
 }
