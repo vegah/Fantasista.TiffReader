@@ -10,6 +10,8 @@ namespace Fantasista.TiffReader.Segments.Fields
         {
             var array = new uint[_value.Count];
             var oldPos = _reader.Position;
+            if (_value.Count==1)
+                return new uint[1] {_value.GetLong()};
             _reader.Seek(_value.GetLong());
             for (var x=0;x<_value.Count;x++)
             {

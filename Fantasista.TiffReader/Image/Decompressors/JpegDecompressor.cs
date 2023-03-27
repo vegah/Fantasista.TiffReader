@@ -1,39 +1,40 @@
-using JpegLibrary;
+using BitMiracle.LibJpeg;
+using BitMiracle.LibJpeg.Classic;
+using Fantasista.TiffReader.Image.Decompressors.Jpeg;
 
 namespace Fantasista.TiffReader.Image.Decompressors
 {
     public class JpegDecompressor : IDecompressor
     {
-        private byte[] _quanitzationTable;
-        private JpegDecoder _decoder;
-        private JpegHuffmanDecodingTable? _dcHuffmanTable;
-        private JpegHuffmanDecodingTable? _acHuffmanTable;
+        private byte[]? _quanitzationTable;
+        private TiffJpeg _tiffJpeg;
 
-        public JpegDecompressor(byte[] quantizationTable)
+        public JpegDecompressor(byte[]? quantizationTable)
         {
             _quanitzationTable = quantizationTable;
-            _decoder = new JpegDecoder();
-            var parsedQuantizationTable = new JpegQuantizationTable();
-            var readOnlySpan = new System.Buffers.ReadOnlySequence<byte>(_quanitzationTable);
-            int bytesConsumed = 0;
-            if (!JpegQuantizationTable.TryParse(0,0,readOnlySpan,out parsedQuantizationTable,ref bytesConsumed))
-            {
-                throw new JpegDecompressionException("Quantization table is not in correct format");            
-            }
-            Console.WriteLine("Bytes consumed "+bytesConsumed);
-            _decoder.SetQuantizationTable(parsedQuantizationTable);            
+            _tiffJpeg = new TiffJpeg(quantizationTable);
 
         }
         public byte[] Decompress(byte[] compressedData)
         {
+            var decompressor = new jpeg_decompress_struct();
+            var mergedJpeg = _tiffJpeg.GetTiffJpegAsNormalJpeg(compressedData);
 
-            _decoder.SetInput(new ReadOnlyMemory<byte>(compressedData));
-            _decoder.Identify(); 
-            byte[] output = new byte[_decoder.Width*_decoder.Height*_decoder.NumberOfComponents];
-            var outputWriter = new JpegBufferOutputWriter8Bit(_decoder.Width,_decoder.Height,_decoder.NumberOfComponents,output);
-            _decoder.SetOutputWriter(outputWriter);
-            _decoder.Decode();
-            return output.Where((v,i)=>i%2==0).ToArray();            
+            decompressor.jpeg_stdio_src(new MemoryStream(mergedJpeg));
+            decompressor.jpeg_read_header(true);
+            decompressor.jpeg_start_decompress();
+            var read = 0;
+            var result = new byte[0];
+            while (read<decompressor.Image_height)
+            {
+                var tempBuffer = new byte[decompressor.Image_height][];
+                tempBuffer = tempBuffer.Select(x=>new byte[decompressor.Image_width*decompressor.Num_components]).ToArray();
+                var new_read= decompressor.jpeg_read_scanlines(tempBuffer,decompressor.Image_height);
+                result = result.Concat(tempBuffer.Take(new_read).SelectMany(x=>x)).ToArray();
+                read+=new_read;
+            }
+            decompressor.jpeg_finish_decompress();
+            return result;
         }
 
     }
