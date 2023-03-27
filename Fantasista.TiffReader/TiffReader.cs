@@ -25,6 +25,7 @@ public class TiffReader
             ifd.ReadIFD();
             var image = new TiffImage(_br,ifd);
             image.Read();
+            File.WriteAllBytes("/home/vegardb/Downloads/temp/"+nextIfd+".data",image.RawData);
             nextIfd = ifd.NextOffset;
         }
     }

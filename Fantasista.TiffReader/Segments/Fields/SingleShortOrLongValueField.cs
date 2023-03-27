@@ -11,7 +11,7 @@ namespace Fantasista.TiffReader.Segments.Fields
                 _ssize = _value.GetShort();
             else if (type==FieldType.Long)
                 _lsize = _value.GetLong();
-            else throw new FieldValueException("ImageLength or ImageHeight must be Short or Long");
+            else throw new FieldValueException($"{tag} is expected to be Short or Long");
         }
 
         public uint Value => _type == FieldType.Short ? _ssize : _lsize;

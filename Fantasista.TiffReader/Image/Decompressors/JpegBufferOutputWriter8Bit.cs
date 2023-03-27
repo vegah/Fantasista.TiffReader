@@ -48,14 +48,14 @@ namespace Fantasista.TiffReader.Image.Decompressors
                 ref byte destinationRowRef = ref Unsafe.Add(ref destinationRef, destY * width * componentCount);
                 for (int destX = 0; destX < writeWidth; destX++)
                 {
-                    Unsafe.Add(ref destinationRowRef, destX * componentCount) = ClampTo8Bit(Unsafe.Add(ref blockRef, destX));
+                    Unsafe.Add(ref destinationRowRef, destX * componentCount) = ClampTo8Bit(Unsafe.Add(ref blockRef, destX),componentIndex);
                 }
                 blockRef = ref Unsafe.Add(ref blockRef, 8);
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static byte ClampTo8Bit(short input)
+        private static byte ClampTo8Bit(short input,int componentIndex)
         {
             return (byte)Math.Clamp(input, (short)0, (short)255);
         }

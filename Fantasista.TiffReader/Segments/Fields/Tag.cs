@@ -2,6 +2,7 @@ namespace Fantasista.TiffReader.Segments.Fields
 {
     public enum Tag : ushort
     {
+        NewSubfileType = 254,
         ImageWidth=256,
 
         BitsPerSample = 258,

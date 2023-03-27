@@ -25,6 +25,13 @@ namespace Fantasista.TiffReader.Segments.Fields
             {Tag.SamplesPerPixel,(a,b,c)=>new SingleShortOrLongValueField(a,b,c)},
             {Tag.ImageDescription,(a,b,c)=>new StringValueField(a,b,c)},
             {Tag.JPEGTables,(a,b,c)=>new ByteArrayField(a,b,c)},
+            {Tag.Orientation,(a,b,c)=>new SingleShortOrLongValueField(a,b,c)},
+            {Tag.FillOrder,(a,b,c)=>new SingleShortOrLongValueField(a,b,c)},
+            {Tag.ExtraSamples,(a,b,c)=>new ShortOrLongArrayField(a,b,c)},
+            {Tag.NewSubfileType,(a,b,c)=>new SingleShortOrLongValueField(a,b,c)},
+            {Tag.PageNumber,(a,b,c)=>new SingleShortOrLongValueField(a,b,c)},
+            {Tag.WhitePoint,(a,b,c)=>new SingleRationalNumberField(a,b,c)},
+
 
 
 
