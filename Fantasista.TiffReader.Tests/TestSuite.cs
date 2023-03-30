@@ -65,7 +65,7 @@ namespace Fantasista.TiffReader.Tests
         }
 
         [Fact]
-        public void TestBigEndianComponentShit()
+        public void TestBigEndianImage()
         {
             var file = "../../../../testimages/sc_logo.tif";
             using var stream = File.OpenRead(file);
@@ -81,6 +81,25 @@ namespace Fantasista.TiffReader.Tests
                 File.WriteAllBytes("../../../../testimages/out/test-"+(fileNo++)+".data",image.RawData);
             }
         }
+
+        [Fact]
+        public void TestStrangeHuffman()
+        {
+            var file = "../../../../testimages/casablanca.tif";
+            using var stream = File.OpenRead(file);
+            var reader = new TiffReader(stream);
+            Console.WriteLine($"Extracting from : {file}");
+            var fileNo = 0;
+            foreach (var image in reader.Read())
+            {
+                Console.WriteLine($"Width :{image.Width}, Height: ${image.Height}, Components: {image.ColorComponents} - size: {image.Width*image.Height*image.ColorComponents}");
+                Console.WriteLine($"Output buffer : {image.RawData.Length}");
+                using var outstream =  File.OpenWrite("../../../../testimages/out/test-"+(fileNo++)+".jpg");
+                image.WriteToRgbJpeg(outstream);
+                File.WriteAllBytes("../../../../testimages/out/test-"+(fileNo++)+".data",image.RawData);
+            }
+        }
+
 
     }
 

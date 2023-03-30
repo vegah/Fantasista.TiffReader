@@ -26,6 +26,10 @@ namespace Fantasista.TiffReader.Image.Decompressors.Jpeg
         public byte[] GetTiffJpegAsNormalJpeg(byte[] content)
         {
             var allMarkers = FindAllInterestingMarkers(content);
+            if (_quantizationTable!=null)
+            {
+                var allJpegTableMarkers = FindAllInterestingMarkers(_quantizationTable);
+            }
             var quantizationTableMarker = allMarkers.FirstOrDefault(x=>x.Marker==0xFFDB);
             if (quantizationTableMarker==null && _quantizationTable!=null)
                 content = Insert(allMarkers[1].Position,content,_quantizationTable.Skip(2).Take(_quantizationTable.Length-4));
@@ -65,14 +69,17 @@ namespace Fantasista.TiffReader.Image.Decompressors.Jpeg
             {
                 var currentPos = reader.BaseStream.Position;
                 var marker = ReadShort(reader);
-                var length = ReadShort(reader);
-                reader.BaseStream.Seek(-4,SeekOrigin.Current);
-                var data = reader.ReadBytes(length+2);
-                if (marker==0xFFC4)
+                if (marker!=0xFFD9 && marker!=0xFFD0 && marker!=0xFF01)
                 {
-                    _huffmanTables.Add(data);
+                    var length = ReadShort(reader);
+                    reader.BaseStream.Seek(-4,SeekOrigin.Current);
+                    var data = reader.ReadBytes(length+2);
+                    if (marker==0xFFC4)
+                    {
+                        _huffmanTables.Add(data);
+                    }
+                    positions.Add(new MarkerPosition {Marker=marker,Position=currentPos});
                 }
-                positions.Add(new MarkerPosition {Marker=marker,Position=currentPos});
                 current=marker;
             }
             return positions;

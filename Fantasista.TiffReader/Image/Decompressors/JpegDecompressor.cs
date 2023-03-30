@@ -19,7 +19,7 @@ namespace Fantasista.TiffReader.Image.Decompressors
         {
             var decompressor = new jpeg_decompress_struct();
             var mergedJpeg = _tiffJpeg.GetTiffJpegAsNormalJpeg(compressedData);
-
+            
             decompressor.jpeg_stdio_src(new MemoryStream(mergedJpeg));
             decompressor.jpeg_read_header(true);
             decompressor.jpeg_start_decompress();
