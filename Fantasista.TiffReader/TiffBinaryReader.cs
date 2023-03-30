@@ -54,11 +54,17 @@ namespace Fantasista.TiffReader
             return BitConverter.ToUInt32(ReadNext(4),0);
         }
 
-        public FieldValue ReadFieldValue()
+        public FieldValue ReadFieldValue(FieldType type)
         {
             var count = ReadUInt32();
-            var value = ReadUInt32();
-            return new FieldValue(count,value,this);
+            if (type==FieldType.Short) {
+                var part1 = ReadUInt16();
+                var part2 = ReadUInt16();
+                return new FieldValue(count,part1,this);
+            }
+            else 
+                return new FieldValue(count,ReadUInt32(),this);
+
         }
 
         private byte[] ReadNext(byte size)

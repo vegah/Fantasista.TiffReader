@@ -44,7 +44,7 @@ namespace Fantasista.TiffReader.Segments.Fields
             _reader = reader; 
             _type = type;
             _tagNumber = (ushort)tag;
-            _value = reader.ReadFieldValue();
+            _value = reader.ReadFieldValue(_type);
         }
 
         public Tag Tag => _tag;

@@ -61,6 +61,8 @@ namespace Fantasista.TiffReader
                 {
                     return new PackbitDecompressor();
                 }
+                case CompressionType.NoCompression:
+                    return new NoCompressionDecompressor();
                 default:
                 {
                     throw new UnimplementedCompressionAlgorithmException(type);

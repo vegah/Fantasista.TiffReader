@@ -17,22 +17,18 @@ namespace Fantasista.TiffReader.Segments.Fields
 
         public ushort GetShort()
         {
-            var bytes = BitConverter.GetBytes(_value);
-            var shortPart = bytes.Take(4).ToArray();
-            return BitConverter.ToUInt16(_reader.FixEndianess(ref shortPart));
+            return (ushort)_value;
         } 
 
         public uint GetLong()
         {
-            var bytes = BitConverter.GetBytes(_value);
-            return BitConverter.ToUInt32(_reader.FixEndianess(ref bytes));            
+            return _value;
         } 
 
         public RationalNumber GetRational()
         {
             var position = _reader.Position;
             var newPos = GetLong();
-            Console.WriteLine("NewPost "+newPos);
             _reader.Seek(GetLong());
             var numerator =_reader.ReadUInt32();
             var denominator = _reader.ReadUInt32();
